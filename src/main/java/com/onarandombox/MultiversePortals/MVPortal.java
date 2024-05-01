@@ -53,6 +53,7 @@ public class MVPortal {
     private FileConfiguration config;
     private boolean allowSave;
     private String handlerScript;
+    private String denymessage;
 
     private static final Collection<Material> INTERIOR_MATERIALS = Arrays.asList(Material.NETHER_PORTAL, Material.GRASS,
             Material.VINE, Material.SNOW, Material.AIR, Material.WATER, Material.LAVA);
@@ -86,6 +87,7 @@ public class MVPortal {
         this.setUseSafeTeleporter(this.config.getBoolean(this.portalConfigString + ".safeteleport", true));
         this.setTeleportNonPlayers(this.config.getBoolean(this.portalConfigString + ".teleportnonplayers", false));
         this.setHandlerScript(this.config.getString(this.portalConfigString + ".handlerscript", ""));
+        this.denymessage = this.config.getString(this.portalConfigString + ".denymessage", "&cYou do not have permission to use this portal.");
         this.permission = this.plugin.getServer().getPluginManager().getPermission("multiverse.portal.access." + this.name);
         if (this.permission == null) {
             this.permission = new Permission("multiverse.portal.access." + this.name, "Allows access to the " + this.name + " portal", PermissionDefault.OP);
@@ -429,6 +431,10 @@ public class MVPortal {
 
     public Permission getPermission() {
         return this.permission;
+    }
+
+    public String getDenyMessage() {
+        return this.denymessage;
     }
 
     public Permission getFillPermission() {

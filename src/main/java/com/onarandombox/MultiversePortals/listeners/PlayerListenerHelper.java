@@ -14,6 +14,8 @@ import com.onarandombox.MultiversePortals.MultiversePortals;
 import com.onarandombox.MultiversePortals.PortalPlayerSession;
 import com.onarandombox.MultiversePortals.event.MVPortalEvent;
 import com.onarandombox.buscript.Buscript;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -31,10 +33,11 @@ public class PlayerListenerHelper {
                 playerName, worldName));
     }
 
-    void stateFailure(String playerName, String portalName) {
+    void stateFailure(String playerName, String portalName, Player player, MVPortal portal) {
         Logging.fine(String.format(
                 "MV-Portals is DENYING Player '%s' access to use the portal '%s'.",
                 playerName, portalName));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', portal.getDenyMessage()));
     }
 
     void performTeleport(Player player, Location to, PortalPlayerSession ps, MVDestination d) {
@@ -49,7 +52,6 @@ public class PlayerListenerHelper {
                 return;
             }
         }
-        this.stateFailure(player.getDisplayName(), d.getName());
     }
 
     boolean scriptPortal(Player player, MVDestination d, MVPortal portal, PortalPlayerSession ps) {
